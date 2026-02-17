@@ -83,7 +83,7 @@ if st.button("Get Recommendations"):
     results = recommend_posts(user_id)
 
     if results:
-        st.success(f"Showing Top {len(results)} Recommendations for {user_id}")
+        st.success(f"Show Recommendations for user {user_id}")
 
         for post in results:
             with st.container():

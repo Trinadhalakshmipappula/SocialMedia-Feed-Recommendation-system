@@ -1,12 +1,15 @@
+import os
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 import pandas as pd
 
 def recommend_posts(user_id, top_n=10):
     user_id = str(user_id)
 
     # Load datasets INSIDE function (very important)
-    users = pd.read_csv("data/users.csv")
-    posts = pd.read_csv("data/posts.csv")
-    interactions = pd.read_csv("data/interactions.csv")
+    posts = pd.read_csv(os.path.join(BASE_DIR, "data", "posts.csv"))
+    users = pd.read_csv(os.path.join(BASE_DIR, "data", "users.csv"))
+    interactions = pd.read_csv(os.path.join(BASE_DIR, "data", "interactions.csv"))
+
 
     users["user_id"] = users["user_id"].astype(str)
     interactions["user_id"] = interactions["user_id"].astype(str)
