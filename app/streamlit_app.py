@@ -1,6 +1,8 @@
 
 import streamlit as st
-from similarity import recommend_posts
+import requests
+API_URL = "https://socialmedia-feed-recommendation-system.onrender.com"
+
 
 st.set_page_config(page_title="Personalized Feed", layout="centered")
 
@@ -75,12 +77,24 @@ hr {
 st.title("📱 Personalized Feed Recommendation System")
 
 # ----------------- User Input -----------------
-user_id = st.text_input("Enter User ID ")
+user_id = st.number_input("Enter User ID", min_value=1, step=1)
 
 # ----------------- Get Recommendations -----------------
 if st.button("Get Recommendations"):
 
-    results = recommend_posts(user_id)
+    try:
+        response = requests.get(f"{API_URL}/feed/{user_id}")
+        data = response.json()
+
+        if data["status"] == "success":
+            results = data["recommended_posts"]
+        else:
+            results = []
+
+    except:
+        st.error("API not responding. Please wait 30 seconds and try again.")
+        results = []
+
 
     if results:
         st.success(f"Show Recommendations for user {user_id}")
